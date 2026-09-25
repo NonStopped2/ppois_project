@@ -224,28 +224,6 @@ Document
      │
      └── PdfGenerator
 ```
-
-## Пример OCR-интерфейса
-
-```cpp
-class IOcrEngine {
-public:
-    virtual OCRResult recognize(const Image& image) = 0;
-    virtual ~IOcrEngine() = default;
-};
-```
-
-Реализация на основе Tesseract:
-
-```cpp
-class TesseractOcrEngine : public IOcrEngine {
-public:
-    OCRResult recognize(const Image& image) override;
-};
-```
-
-Такой подход позволяет отделить основную логику программы от конкретной OCR-библиотеки и упрощает unit-тестирование.
-
 ## Unit-тестирование
 
 В проекте планируется тестировать отдельно основные компоненты.

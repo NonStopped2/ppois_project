@@ -1,6 +1,6 @@
 # Lecture2PDF Bot
 
-> **Статус реализации:** доступны модули Арсения — `Document`, `Slide`, `FileStorage`,
+> **Статус реализации:** доступны модули Арсения — `DocumentService`, `Document`, `Slide`, `FileStorage`,
 > `PdfGenerator` и адаптер PDF-рендерера Tesseract. Telegram и обработка изображений
 > пока не реализованы. Перечень возможностей ниже описывает целевой проект.
 >

@@ -6,6 +6,7 @@ add_library(lecture2pdf
     src/document/Document.cpp
     src/storage/FileStorage.cpp
     src/pdf/PdfGenerator.cpp
+    src/document/DocumentService.cpp
 )
 add_library(lecture2pdf::core ALIAS lecture2pdf)
 target_compile_features(lecture2pdf PUBLIC cxx_std_17)
@@ -41,7 +42,8 @@ if(BUILD_TESTING)
         FetchContent_MakeAvailable(googletest)
     endif()
     add_executable(lecture2pdf_tests
-        tests/DocumentTest.cpp tests/FileStorageTest.cpp tests/PdfGeneratorTest.cpp)
+        tests/DocumentTest.cpp tests/FileStorageTest.cpp tests/PdfGeneratorTest.cpp
+        tests/DocumentServiceTest.cpp)
     target_link_libraries(lecture2pdf_tests PRIVATE lecture2pdf GTest::gtest_main)
     if(MSVC)
         target_compile_options(lecture2pdf_tests PRIVATE /utf-8)

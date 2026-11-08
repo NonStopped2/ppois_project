@@ -1,0 +1,43 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: Core (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure without OCR dependencies
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DLECTURE2PDF_WITH_TESSERACT=OFF
+      - name: Build
+        run: cmake --build build --config Debug --parallel 2
+      - name: Test
+        run: ctest --test-dir build -C Debug --output-on-failure
+
+  pdf-integration:
+    name: PDF and real OCR (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OCR and PDF check dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config libtesseract-dev libleptonica-dev tesseract-ocr-eng tesseract-ocr-rus poppler-utils python3-pil fonts-dejavu-core
+      - name: Configure PDF adapter
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DLECTURE2PDF_WITH_TESSERACT=ON
+      - name: Build
+        run: cmake --build build --parallel 2
+      - name: Unit tests
+        run: ctest --test-dir build --output-on-failure
+      - name: Integration tests with real OCR and Poppler
+        run: /usr/bin/python3 tests/pdf_integration.py --binary build/lecture2pdf_pdf_demo --font /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf

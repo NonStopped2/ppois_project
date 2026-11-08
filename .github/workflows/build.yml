@@ -16,7 +16,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6, Node.js 24
+        with:
+          persist-credentials: false
       - name: Configure without OCR dependencies
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DLECTURE2PDF_WITH_TESSERACT=OFF
       - name: Build
@@ -28,7 +30,9 @@ jobs:
     name: PDF and real OCR (Linux)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6, Node.js 24
+        with:
+          persist-credentials: false
       - name: Install OCR and PDF check dependencies
         run: |
           sudo apt-get update

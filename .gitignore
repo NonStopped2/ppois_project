@@ -1,0 +1,20 @@
+# CMake
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+
+# IDE
+.idea/
+.vscode/
+
+# Secrets
+.env
+*.env
+
+# Executables
+*.o
+*.a
+*.so
+telegram_bot
